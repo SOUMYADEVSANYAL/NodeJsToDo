@@ -6,7 +6,9 @@
     <title>Add Task</title>
 </head>
 <body>
-    <h1>Add Task</h1>
+    <% for (let task of tasks) { %>
+    <h1><%= task.title %></h1>
+    <% } %>
     <form action="/add" method="POST">
         <label for="title">Title:</label><br>
         <input type="text" id="title" name="title"><br>

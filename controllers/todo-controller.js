@@ -1,7 +1,11 @@
 const Task = require('../models/task-schema');
 exports.getIndex = (req, res, next) =>{
-    res.render('index',{
-        path: '/'
+    Task.find()
+    .then(tasks => {
+        res.render('index',{
+            tasks: tasks,
+            path: '/'
+        });
     });
 }
 
