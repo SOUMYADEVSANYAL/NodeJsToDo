@@ -15,6 +15,7 @@ const toDo = require('./routes/todo-routes');
 const user = require('./routes/user-routes');
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(toDo);
 app.use(user);

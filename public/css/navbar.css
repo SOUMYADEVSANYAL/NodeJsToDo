@@ -1,0 +1,23 @@
+.fixed-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it's above other content */
+}
+.edit-form-card {
+    width: 50%;
+}
+.navbar {
+    background-color: #f8f9fa; /* Light gray background */
+}
+.navbar-brand {
+    font-weight: bold;
+}
+.navbar-nav .nav-link {
+    color: #333; /* Dark gray text */
+    font-weight: bold;
+}
+.navbar-nav .nav-link:hover {
+    color: #007bff; /* Blue text on hover */
+}

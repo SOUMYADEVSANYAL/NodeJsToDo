@@ -48,3 +48,10 @@ exports.editTask = (req, res, next) => {
     })
     .catch(err => console.log(err));
 }
+
+exports.deleteAllTask = (req, res, next) => {
+    Task.deleteMany()
+    .then(() => {
+        res.redirect('/');
+    });
+}
