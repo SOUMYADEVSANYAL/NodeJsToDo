@@ -26,3 +26,25 @@ exports.postTask = (req, res, next) =>{
         console.log(err);
       });
 }
+
+exports.deleteTask = (req, res, next) => {
+    const taskId = req.body.taskId;
+    Task.findByIdAndRemove(taskId).then(()=>{
+        res.redirect('/');
+    })
+}
+exports.editTask = (req, res, next) => {
+    const taskId = req.body.taskId;
+    const updatedTaskTitle = req.body.editTitle;
+    const updatedTaskDescription = req.body.editDescription;
+    Task.findById(taskId)
+    .then((task) => {
+        task.title = updatedTaskTitle;
+        task.description = updatedTaskDescription;
+        return task.save();
+    })
+    .then(() => {
+        res.redirect('/');
+    })
+    .catch(err => console.log(err));
+}
