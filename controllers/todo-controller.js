@@ -1,11 +1,17 @@
 const Task = require('../models/task-schema');
 exports.getIndex = (req, res, next) =>{
-    Task.find()
+    Task.find({ userId: req.user._id }) // Fetch tasks with userId matching req.user._id
     .then(tasks => {
-        res.render('index',{
+        res.render('index', {
             tasks: tasks,
+            userName: req.user.name,
             path: '/'
         });
+    })
+    .catch(error => {
+        // Handle errors
+        console.error("Error fetching tasks:", error);
+        res.status(500).send("Error fetching tasks");
     });
 }
 
@@ -14,7 +20,8 @@ exports.postTask = (req, res, next) =>{
     const taskDescription = req.body.description;
     const task = new Task({
         title: taskTitle,
-        description: taskDescription
+        description: taskDescription,
+        userId: req.user._id,
     });
     task.save()
     .then(result => {
