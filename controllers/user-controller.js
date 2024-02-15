@@ -11,6 +11,11 @@ exports.getSignUp = (req, res, next)=>{
     });
 };
 
+exports.postSignIn = (req, res, next)=>{
+    req.session.isLoggedIn = true;
+    res.redirect('/');
+};
+
 exports.postSignUp = (req, res, next)=>{
     const name = req.body.name;
     const email = req.body.email;

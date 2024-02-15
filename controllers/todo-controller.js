@@ -1,10 +1,15 @@
 const Task = require('../models/task-schema');
 exports.getIndex = (req, res, next) =>{
+    var cookie = req.get('Cookie');
+    if(cookie){
+        cookie = cookie.split('=')[1];
+    }
     Task.find({ userId: req.user._id }) // Fetch tasks with userId matching req.user._id
     .then(tasks => {
         res.render('index', {
             tasks: tasks,
             userName: req.user.name,
+            isAuth: cookie,
             path: '/'
         });
     })
