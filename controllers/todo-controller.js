@@ -33,10 +33,18 @@ exports.getIndex = (req, res, next) => {
     }
 }
 
+exports.getAbout = (req, res, next) => {
+    res.render('about', {
+        userName: req.session.user,
+        isAuth: req.session.isLoggedIn,
+        path: '/about'
+    })
+}
+
 exports.postTask = (req, res, next) => {
     if (req.session.user) {
-        const taskTitle = req.body.title? req.body.title: "Not Mentioned";
-        const taskDescription = req.body.description? req.body.description: "Not Mentioned" ;
+        const taskTitle = req.body.title ? req.body.title : "Not Mentioned";
+        const taskDescription = req.body.description ? req.body.description : "Not Mentioned";
         const task = new Task({
             title: taskTitle,
             description: taskDescription,
@@ -51,7 +59,7 @@ exports.postTask = (req, res, next) => {
             .catch(err => {
                 console.log(err);
             });
-    }else{
+    } else {
         res.redirect('/login');
     }
 }
@@ -79,7 +87,7 @@ exports.editTask = (req, res, next) => {
 }
 
 exports.deleteAllTask = (req, res, next) => {
-    Task.deleteMany({userId: req.session.user._id})
+    Task.deleteMany({ userId: req.session.user._id })
         .then(() => {
             res.redirect('/');
         });
