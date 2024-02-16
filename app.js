@@ -7,7 +7,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 
 const errorController = require('./controllers/error-controller');
-const User = require('./models/user-schema');
+// const User = require('./models/user-schema');
 
 const app = express();
 const store = new MongoDBStore({
@@ -40,15 +40,6 @@ mongoose
     'mongodb+srv://soumyasp35:jlz3q806Rm1l1BLP@cluster0.t6vmiqm.mongodb.net/todo?retryWrites=true&w=majority'
   )
   .then(result => {
-    // User.findOne().then(user => {
-    //   if (!user) {
-    //     const user = new User({
-    //       name: 'Nick',
-    //       email: 'nick@zpd.com',
-    //     });
-    //     user.save();
-    //   }
-    // });
     app.listen(3000);
   })
   .catch(err => {
