@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,88 +9,103 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/navbar.css">
 </head>
+
 <body>
     <!-- <img src="/images/asd.jpg" width="100" height="100"> -->
     <%- include('./includes/navbar.ejs') %>
-    <% if(isAuth) { %>
-        <h1 class="container mt-5"><%= userName %></h1> 
-    <% } %>
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Add Task</h5>
-                <form action="/add" method="POST">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title:</label>
-                        <input type="text" id="title" name="title" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description:</label>
-                        <textarea id="description" name="description" class="form-control"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Task</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="container mt-5">
-        <% if (tasks.length > 0) { %> <!-- Check if there are tasks -->
-            <form action="/delete-all-tasks" method="POST"> <!-- Form to delete all tasks -->
-                <button type="submit" class="btn btn-danger mb-3">Delete All</button>
-            </form>
-        <% }
-        var i = 0; %>
-        <% for (let task of tasks) { %>
-            <div class="row mb-3">
-                <div class="col-12">
+        <% if(isAuth) { %>
+            <h1 class="container mt-5">
+                <%= userName %>
+            </h1>
+            <% } %>
+                <div class="container mt-5">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"><%= task.title %></h5>
-                            <p class="card-text"><%= task.description %></p>
-                            <form action="/delete-task" method="POST" class="d-inline">
-                                <input type="hidden" value="<%= task._id %>" name="taskId">
-                                <button type="submit" class="btn btn-danger me-2">Delete</button>
+                            <h5 class="card-title">Add Task</h5>
+                            <form action="/add" method="POST">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title:</label>
+                                    <input type="text" id="title" name="title" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description:</label>
+                                    <textarea id="description" name="description" class="form-control"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Task</button>
                             </form>
-                            <button class="btn btn-primary" onclick="showEditForm('<%= task._id %>')">Edit</button>
-                        </div>
-                        <!-- Edit form (initially hidden) -->
-                        <div id="editForm_<%= task._id %>" class="card-body edit-form-card mx-auto" style="display: none;">
-                            <div class="card p-3">
-                                <form action="/edit-task" method="POST">
-                                    <input type="hidden" name="taskId" value="<%= task._id %>">
-                                    <div class="mb-3">
-                                        <label for="editTitle" class="form-label">New Title:</label>
-                                        <input type="text" id="editTitle" name="editTitle" class="form-control" value="<%= task.title %>">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="editDescription" class="form-label">New Description:</label>
-                                        <textarea id="editDescription" name="editDescription" class="form-control"><%= task.description %></textarea>
-                                    </div>
-                                    <div class="d-grid">
-                                        <button type="submit" class="btn btn-primary">Update</button>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        <% 
-        i++;
-    } %>
-    </div>
-    <!-- Bootstrap JS (Optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JavaScript -->
-    <script>
-        function showEditForm(taskId) {
-            var editForm = document.getElementById("editForm_" + taskId);
-            if (editForm.style.display === "none") {
-                editForm.style.display = "block";
-            } else {
-                editForm.style.display = "none";
-            }
-        }
-    </script>
+                <div class="container mt-5">
+                    <% if (tasks.length> 0) { %> <!-- Check if there are tasks -->
+                        <form action="/delete-all-tasks" method="POST"> <!-- Form to delete all tasks -->
+                            <button type="submit" class="btn btn-danger mb-3">Delete All</button>
+                        </form>
+                        <% } var i=0; %>
+                            <% for (let task of tasks) { %>
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%= task.title %>
+                                                </h5>
+                                                <p class="card-text">
+                                                    <%= task.description %>
+                                                </p>
+                                                <form action="/delete-task" method="POST" class="d-inline">
+                                                    <input type="hidden" value="<%= task._id %>" name="taskId">
+                                                    <button type="submit" class="btn btn-danger me-2">Delete</button>
+                                                </form>
+                                                <button class="btn btn-primary"
+                                                    onclick="showEditForm('<%= task._id %>')">Edit</button>
+                                            </div>
+                                            <!-- Edit form (initially hidden) -->
+                                            <div class="col-12 d-flex justify-content-around">
+                                                <div id="editForm_<%= task._id %>"
+                                                    class="col col-md-6 col-xs-12 mx-3">
+                                                    <div class="card p-3">
+                                                        <form action="/edit-task" method="POST">
+                                                            <input type="hidden" name="taskId" value="<%= task._id %>">
+                                                            <div class="mb-3">
+                                                                <label for="editTitle" class="form-label">New
+                                                                    Title:</label>
+                                                                <input type="text" id="editTitle" name="editTitle"
+                                                                    class="form-control" value="<%= task.title %>">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="editDescription" class="form-label">New
+                                                                    Description:</label>
+                                                                <textarea id="editDescription" name="editDescription"
+                                                                    class="form-control"><%= task.description %></textarea>
+                                                            </div>
+                                                            <div class="d-grid">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Update</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% i++; } %>
+                </div>
+                <!-- Bootstrap JS (Optional) -->
+                <script
+                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+                <!-- Custom JavaScript -->
+                <script>
+                    function showEditForm(taskId) {
+                        var editForm = document.getElementById("editForm_" + taskId);
+                        if (editForm.style.display === "none") {
+                            editForm.style.display = "block";
+                        } else {
+                            editForm.style.display = "none";
+                        }
+                    }
+                </script>
 </body>
+
 </html>

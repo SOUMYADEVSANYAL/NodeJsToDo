@@ -21,7 +21,7 @@ exports.postSignIn = (req, res, next) => {
         .then((user) => {
             if (!user) {
                 console.log('User not found');
-                res.redirect('/login');
+                res.redirect('/signup');
             } else {
                 bcrypt
                     .compare(password, user.password)
