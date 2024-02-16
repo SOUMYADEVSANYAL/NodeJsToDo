@@ -23,6 +23,8 @@ const user = require('./routes/user-routes');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 app.use(session({
   secret: 'This is my secret',
   store: store,
