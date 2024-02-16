@@ -1,25 +1,17 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user-schema');
 exports.getSignIn = (req, res, next) => {
-    if (req.session.isLoggedIn) {
-        res.redirect('/error');
-    } else {
-        res.render('login', {
-            isAuth: false,
-            path: '/login'
-        });
-    }
+    res.render('login', {
+        isAuth: false,
+        path: '/login'
+    });
 };
 
 exports.getSignUp = (req, res, next) => {
-    if (req.session.isLoggedIn) {
-        res.redirect('/error');
-    } else {
-        res.render('signup', {
-            isAuth: req.session.isLoggedIn,
-            path: '/signup'
-        });
-    }
+    res.render('signup', {
+        isAuth: req.session.isLoggedIn,
+        path: '/signup'
+    });
 };
 
 exports.postSignIn = (req, res, next) => {
