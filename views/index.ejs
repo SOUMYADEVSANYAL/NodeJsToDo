@@ -57,13 +57,12 @@
                                                     <input type="hidden" value="<%= task._id %>" name="taskId">
                                                     <button type="submit" class="btn btn-danger me-2">Delete</button>
                                                 </form>
-                                                <button class="btn btn-primary"
-                                                    onclick="showEditForm('<%= task._id %>')">Edit</button>
+                                                <button class="btn btn-primary edit-btn" data-task-id="<%= task._id %>">Edit</button>
                                             </div>
                                             <!-- Edit form (initially hidden) -->
                                             <div class="col-12 d-flex justify-content-around">
                                                 <div id="editForm_<%= task._id %>"
-                                                    class="col col-md-6 col-xs-12 mx-3">
+                                                    class="col col-md-6 col-xs-12 mx-3" style="display: none;">
                                                     <div class="card p-3">
                                                         <form action="/edit-task" method="POST">
                                                             <input type="hidden" name="taskId" value="<%= task._id %>">
@@ -93,18 +92,16 @@
                                 <% i++; } %>
                 </div>
                 <!-- Bootstrap JS (Optional) -->
-                <script
-                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-                <!-- Custom JavaScript -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+                <!-- jQuery -->
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script>
-                    function showEditForm(taskId) {
-                        var editForm = document.getElementById("editForm_" + taskId);
-                        if (editForm.style.display === "none") {
-                            editForm.style.display = "block";
-                        } else {
-                            editForm.style.display = "none";
-                        }
-                    }
+                    $(document).ready(function () {
+                        $(".edit-btn").click(function () {
+                            var taskId = $(this).data("task-id");
+                            $("#editForm_" + taskId).toggle();
+                        });
+                    });
                 </script>
 </body>
 
